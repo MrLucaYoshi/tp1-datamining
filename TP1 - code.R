@@ -12,3 +12,5 @@ runAnalysis <- function(fileData, indexContVar, classID) {
   myData <- read.table(file=fileData, header=TRUE, sep=",")
   
 }
+
+#Test
