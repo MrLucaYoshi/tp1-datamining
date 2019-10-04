@@ -13,4 +13,4 @@ runAnalysis <- function(fileData, indexContVar, classID) {
   
 }
 
-#Bite
+#barplot(prop.table(table(shop[,11])))
