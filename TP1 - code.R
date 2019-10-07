@@ -36,8 +36,6 @@ runAnalysis <- function(fileName, discretes, attToRemove, classId) {
       
     }
   }
-  
-  
 }
 
 
