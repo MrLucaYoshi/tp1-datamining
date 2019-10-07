@@ -18,25 +18,36 @@ runAnalysis <- function(fileName, discretes, attToRemove, classId) {
   data <- read.table(file=fileName, header=TRUE, sep=",")
   
   for(d in c(1:length(data))){
-    if(is.element(d,discretes)){
-      #Discretes
-      #P(att)
-      windows()
-      probabilityDistribution(data,d)
-      contTable<-table(data[,d],data[,classId])
-      #P(target|att)
-      windows()
-      barplot(prop.table(contTable),1)
-    }else{
-      #Continuous
-      #
-      mean(data[,d])
-      var(data[,d])
-      #(target|att)
-      
+    if(!is.element(d,attToRemove)){
+      if(is.element(d,discretes)){
+        #Discretes
+        #P(att)
+        windows()
+        probabilityDistribution(data,d)
+        contTable<-table(data[,d],data[,classId])
+        #P(target|att)
+        windows()
+        barplot(prop.table(contTable),
+                main="Distribution target",
+                col=c("blue","red","orange","yellow","purple","darkblue","black","white","pink","green"),
+                legend=TRUE,
+                xlab = "Revenue",
+                ylab = names(data)[d]
+                )
+      }else{
+        #Continuous
+        #
+        print(names(data)[d])
+        print(paste("Moyenne :",mean(data[,d]),sep = " "))
+        print(paste("variance :",var(data[,d]),sep = " "))
+        
+        #(target|att)
+        
+      }
     }
   }
 }
 
 
 #c(1:length(shop))-discretes
+#runAnalysis("online_shoppers_intention.csv",c(1,3,5,10,11,12,13,14,15,16,17,18),c(12,13),18)
