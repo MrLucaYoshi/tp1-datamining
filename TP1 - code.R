@@ -24,18 +24,21 @@ colVars <- function(x, na.rm=FALSE, dims=1, unbiased=TRUE, SumSquares=FALSE,
 
 runAnalysis <- function(fileName, discretes, attToRemove, classId) {
   data <- read.table(file=fileName, header=TRUE, sep=",")
+  quartz()
   hist(colMeans(data[,-c(attToRemove,discretes,classId)]))
+  quartz()
+  hist(colVars(data[,-c(attToRemove, discretes, classId)]))
   
   for(d in c(1:length(data))){
     if(!is.element(d,attToRemove)){
       if(is.element(d,discretes)){
         #Discretes
         #P(att)
-        windows()
+        quartz()
         probabilityDistribution(data,d)
         contTable<-table(data[,d],data[,classId])
         #P(target|att)
-        windows()
+        quartz()
         barplot(prop.table(contTable),
                 main="Distribution target",
                 col=c("blue","red","orange","yellow","purple","darkblue","black","white","pink","green"),
@@ -43,12 +46,11 @@ runAnalysis <- function(fileName, discretes, attToRemove, classId) {
                 xlab = "Revenue",
                 ylab = names(data)[d]
                 )
+                
       }else{
         #Continuous
         #
         print(names(data)[d])
-        print(paste("Moyenne :",mean(data[,d]),sep = " "))
-        print(paste("variance :",var(data[,d]),sep = " "))
         
         #(target|att)
         
