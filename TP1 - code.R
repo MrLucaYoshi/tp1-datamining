@@ -10,8 +10,19 @@
 #
 
 probabilityDistribution <- function(data, attribute)  {
-  barplot(prop.table(table(data[,attribute])),main = names(data)[attribute]) 
+  barplot(prop.table(table(data[,attribute])),main = names(data)[attribute])
 }
+
+computeMeanContinue <- function(data, attribute) {
+  mean(data[,attribute])
+}
+
+computeVarContinue <- function(data, attribute) {
+  var(data[,attribute])
+}
+
+
+
 colVars <- function(x, na.rm=FALSE, dims=1, unbiased=TRUE, SumSquares=FALSE,
                     twopass=FALSE) {
   if (SumSquares) return(colSums(x^2, na.rm, dims))
@@ -22,23 +33,25 @@ colVars <- function(x, na.rm=FALSE, dims=1, unbiased=TRUE, SumSquares=FALSE,
   (colSums(x^2, na.rm, dims) - colSums(x, na.rm, dims)^2/N) / Nm1
 }
 
+
 runAnalysis <- function(fileName, discretes, attToRemove, classId) {
   data <- read.table(file=fileName, header=TRUE, sep=",")
-  quartz()
+  windows()
   hist(colMeans(data[,-c(attToRemove,discretes,classId)]))
-  quartz()
+  windows()
   hist(colVars(data[,-c(attToRemove, discretes, classId)]))
+  
   
   for(d in c(1:length(data))){
     if(!is.element(d,attToRemove)){
       if(is.element(d,discretes)){
         #Discretes
         #P(att)
-        quartz()
+        windows()
         probabilityDistribution(data,d)
         contTable<-table(data[,d],data[,classId])
         #P(target|att)
-        quartz()
+        windows()
         barplot(prop.table(contTable),
                 main="Distribution target",
                 col=c("blue","red","orange","yellow","purple","darkblue","black","white","pink","green"),
@@ -51,7 +64,9 @@ runAnalysis <- function(fileName, discretes, attToRemove, classId) {
         #Continuous
         #
         print(names(data)[d])
-        
+        windows()
+        print(computeMeanContinue((data)[d]))
+        print(computeVarContinue((data)[d]))
         #(target|att)
         
       }
