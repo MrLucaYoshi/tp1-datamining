@@ -82,6 +82,6 @@ runAnalysis <- function(fileName, discretes, attToRemove, classId) {
   }
 }
 
-
+#Tests
 #c(1:length(shop))-discretes
 #runAnalysis("online_shoppers_intention.csv",c(1,3,5,10,11,12,13,14,15,16,17,18),c(12,13),18)
